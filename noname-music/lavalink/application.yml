@@ -1,0 +1,109 @@
+# Lavalink v4 — server audio untuk Noname Music
+# Jalankan: java -Xmx512M -jar Lavalink.jar  (dari dalam folder lavalink/)
+
+server:
+  port: 2333
+  address: 127.0.0.1 # hanya bisa diakses dari VPS sendiri (aman)
+
+lavalink:
+  plugins:
+    # YouTube (wajib) — sumber resmi pengganti YouTube bawaan Lavalink
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.2"
+      snapshot: false
+    # Spotify / Apple Music / Deezer (link Spotify otomatis dicarikan audionya di YouTube)
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.3"
+      repository: "https://maven.lavalink.dev/releases"
+      snapshot: false
+
+  server:
+    # HARUS sama dengan LAVALINK_PASSWORD di file .env bot
+    password: "ganti_password_lavalink_ini"
+    sources:
+      youtube: false # dimatikan, diganti youtube-plugin di atas
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      http: true
+      local: false
+    filters:
+      volume: true
+      equalizer: true
+      karaoke: true
+      timescale: true
+      tremolo: true
+      vibrato: true
+      distortion: true
+      rotation: true
+      channelMix: true
+      lowPass: true
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: HIGH
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    youtubePlaylistLoadLimit: 6
+    playerUpdateInterval: 5
+    youtubeSearchEnabled: true
+    soundcloudSearchEnabled: true
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    # Urutan client dicoba dari atas. MUSIC = pencarian YouTube Music.
+    clients:
+      - MUSIC
+      - ANDROID_VR
+      - WEB
+      - WEBEMBEDDED
+      - TVHTML5_SIMPLY
+    # Kalau suatu saat YouTube sering error "Sign in to confirm you're not a bot",
+    # aktifkan OAuth (pakai akun Google CADANGAN, jangan akun utama):
+    # oauth:
+    #   enabled: true
+
+  lavasrc:
+    providers:
+      - "ytsearch:\"%ISRC%\""
+      - "ytsearch:%QUERY%"
+    sources:
+      spotify: true
+      applemusic: false
+      deezer: false
+      yandexmusic: false
+    spotify:
+      # Opsional: isi dari https://developer.spotify.com/dashboard
+      # Diperlukan kalau DEFAULT_SEARCH=spsearch. Link Spotify biasa tetap bisa tanpa ini.
+      # clientId: "isi_client_id"
+      # clientSecret: "isi_client_secret"
+      countryCode: "ID"
+      playlistLoadLimit: 6 # 6 x 100 lagu
+      albumLoadLimit: 6 # 6 x 50 lagu
+      resolveArtistsInSearch: false
+      localFiles: false
+
+metrics:
+  prometheus:
+    enabled: false
+
+sentry:
+  dsn: ""
+  environment: ""
+
+logging:
+  file:
+    path: ./logs/
+  level:
+    root: INFO
+    lavalink: INFO
+    dev.lavalink.youtube: WARN
+  request:
+    enabled: false
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 7

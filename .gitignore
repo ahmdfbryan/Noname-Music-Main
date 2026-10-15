@@ -1,0 +1,6 @@
+node_modules/
+.env
+data/
+lavalink/Lavalink.jar
+lavalink/plugins/
+lavalink/logs/

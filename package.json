@@ -1,0 +1,23 @@
+{
+  "name": "noname-music",
+  "version": "1.0.0",
+  "description": "Bot musik premium 24/7 untuk Noname Studios Creative (Lavalink + Components V2)",
+  "main": "src/index.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "check": "node scripts/selftest.js",
+    "test": "node scripts/selftest.js && node scripts/integration-test.js"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "dependencies": {
+    "discord.js": "14.27.0",
+    "dotenv": "^16.6.1",
+    "lavalink-client": "2.11.0"
+  },
+  "devDependencies": {
+    "ws": "^8.18.0"
+  }
+}
